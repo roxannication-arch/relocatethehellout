@@ -298,7 +298,7 @@
     <div class="section-head"><h2>Кто ведёт</h2><div class="meta mono">Автор курса</div></div>
     <div class="about-top">
       <div class="author-photo">
-        <img src="AUTHOR_PHOTO" alt="" onerror="this.style.display='none';this.parentNode.classList.add('empty')">
+        <img alt="" onerror="this.style.display='none';this.parentNode.classList.add('empty')">
         <span class="ph-initial">Р</span>
         <span class="ph-hint">фото сюда</span>
       </div>
@@ -423,7 +423,11 @@
     const ph = document.querySelector('.author-photo');
     const img = ph ? ph.querySelector('img') : null;
     if(img){
-      if(AUTHOR_PHOTO){ img.src = AUTHOR_PHOTO; }
+      if(AUTHOR_PHOTO){
+        img.style.display='';
+        ph.classList.remove('empty');
+        img.src = AUTHOR_PHOTO;
+      }
       else { img.style.display='none'; ph.classList.add('empty'); }
     }
   })();

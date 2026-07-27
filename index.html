@@ -84,6 +84,22 @@
   .quick-offer .inner{max-width:var(--col);margin:0 auto;padding:34px 28px 38px}
   .quick-offer h2{margin:0 0 16px;font-size:clamp(28px,4vw,46px)}
   .quick-offer p{font-size:18px;line-height:1.65;margin:0 0 18px}
+  .route-builder{border:3px solid var(--rule);background:var(--paper);padding:18px;margin:24px 0}
+  .route-builder h3{margin:0 0 14px;font-size:clamp(22px,3vw,32px)}
+  .route-form{display:grid;gap:12px}
+  .route-field{display:grid;gap:7px}
+  .route-field span{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--accent-deep);font-weight:600}
+  .route-field select{width:100%;border:2px solid var(--rule);background:var(--paper-2);color:var(--ink);font-family:'Lora',Georgia,serif;font-size:16px;padding:12px}
+  .route-result{margin-top:20px;border-top:2px solid var(--rule);padding-top:18px}
+  .route-result[hidden]{display:none}
+  .result-kicker{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--accent-deep);font-weight:600;margin-bottom:8px}
+  .route-result h3{font-size:clamp(26px,4vw,42px);color:var(--accent);margin-bottom:12px}
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  .result-card{border:2px solid var(--rule);background:var(--paper-2);padding:14px}
+  .result-card h4{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:17px;margin:0 0 8px}
+  .result-card p,.result-card li{font-size:15.5px;line-height:1.5;margin:0}
+  .result-card ul{padding-left:18px;margin:0}
+  .result-wide{grid-column:1/-1}
 
   /* ARTICLE LAYOUT */
   .article{padding:40px 0 0}
@@ -204,6 +220,7 @@
   .track p{font-size:16.5px;line-height:1.6;margin:0}
   @media(max-width:700px){
     .tracks{grid-template-columns:1fr}
+    .result-grid{grid-template-columns:1fr}
     .mod{grid-template-columns:56px 1fr}
     .mod .mno{font-size:30px}
     body{padding-bottom:74px}
@@ -328,14 +345,21 @@
       <span class="tag">Зачем вступать</span>
       За $100 ты покупаешь не «волшебную релокацию», а понятный первый маршрут: куда смотреть, что готовить сейчас, где справиться самому и где правда нужен специалист. Это дешевле одной лишней консультации у помогатора.
     </div>
-    <div class="tracks tracks-3">
-      <div class="track"><span class="tag">1</span><h3>Точка А</h3><p>Разложить паспорт, бюджет, профессию, сроки и ограничения без паники.</p></div>
-      <div class="track"><span class="tag">2</span><h3>2–3 страны</h3><p>Выбрать не «красиво», а реалистично: въезд, легализация, деньги, первый доход.</p></div>
-      <div class="track"><span class="tag">3</span><h3>Первый шаг</h3><p>Понять, какой документ или действие делать сейчас, а что не покупать вслепую.</p></div>
-    </div>
-    <div class="btns" style="margin-top:22px">
-      <a class="btn btn-fill" href="#kupit">Вступить в ВЫЕЗД</a>
-      <a class="btn btn-line" href="#article">Сначала читать статью</a>
+    <div class="route-builder" id="route-builder">
+      <h3>Собери черновик маршрута за 2 минуты</h3>
+      <div class="route-form">
+        <label class="route-field"><span>Сколько денег есть на старт?</span><select id="rb-budget"><option value="low">До $3 000</option><option value="mid">$3 000–5 000</option><option value="upper">$5 000–8 000</option><option value="high">От $8 000</option></select></label>
+        <label class="route-field"><span>Когда хочется уехать?</span><select id="rb-timeline"><option value="now">В ближайший месяц</option><option value="soon">За 2–3 месяца</option><option value="later">За полгода</option><option value="research">Пока изучаю</option></select></label>
+        <label class="route-field"><span>Есть ли удалённый доход?</span><select id="rb-income"><option value="stable">Да, стабильный</option><option value="unstable">Есть, но нестабильный</option><option value="none">Нет, надо искать</option></select></label>
+        <label class="route-field"><span>Кто едет?</span><select id="rb-group"><option value="solo">Один/одна</option><option value="partner">С партнёром</option><option value="family">С ребёнком</option><option value="pet">С животным</option></select></label>
+        <label class="route-field"><span>Что важнее всего?</span><select id="rb-priority"><option value="cheap">Дёшево стартануть</option><option value="legal">Легализоваться</option><option value="work">Найти работу/доход</option><option value="europe">Попасть в Европу</option><option value="tax">Снизить налоги</option></select></label>
+        <label class="route-field"><span>Профессию можно монетизировать?</span><select id="rb-skill"><option value="yes">Да</option><option value="no">Пока нет</option><option value="unsure">Не понимаю</option></select></label>
+      </div>
+      <div class="btns" style="margin-top:16px">
+        <button class="btn btn-fill" type="button" id="build-route">Показать мой черновик</button>
+        <a class="btn btn-line" href="#article">Сначала читать статью</a>
+      </div>
+      <div class="route-result" id="route-result" hidden></div>
     </div>
   </div>
 </section>
@@ -764,6 +788,72 @@
   if(!menu)return;
   menu.querySelectorAll('a').forEach(function(link){
     link.addEventListener('click',function(){menu.removeAttribute('open')});
+  });
+})();
+(function(){
+  var btn=document.getElementById('build-route');
+  var out=document.getElementById('route-result');
+  if(!btn||!out)return;
+  function val(id){return document.getElementById(id).value}
+  function items(arr){return '<ul>'+arr.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
+  function pickBase(budget,priority){
+    if(priority==='tax')return ['ОАЭ','Таиланд DTV','Сербия как запасная база'];
+    if(priority==='europe')return ['Сербия','Германия через учёбу/фриланс','Армения как подготовительная база'];
+    if(budget==='low')return ['Грузия','Армения','Казахстан или Кыргызстан','Узбекистан'];
+    if(budget==='mid')return ['Сербия','Вьетнам','Турция с осторожностью','Мексика для разведки'];
+    if(budget==='upper')return ['Сербия','Мексика','Парагвай','Европа через учёбу'];
+    return ['ОАЭ','Таиланд DTV','Европа через долгие визы','Сербия как спокойная база'];
+  }
+  function budgetText(budget,group){
+    var base={
+      low:'$2 800–4 000',
+      mid:'$4 000–6 500',
+      upper:'$6 000–9 500',
+      high:'$9 000–18 000+'
+    }[budget];
+    if(group==='partner')base+=' на пару лучше считать с запасом +40–60%';
+    if(group==='family')base+='; с ребёнком нужен отдельный запас на жильё, медицину и документы';
+    if(group==='pet')base+='; с животным добавь ветдокументы, переноску и запас на авиаправила';
+    return base;
+  }
+  function typeText(budget,income,priority){
+    if(income==='none')return ['Маршрут: доход сначала, страна-база потом','Тебе важно не прыгать сразу в дорогую мечту. Сначала нужна дешёвая легальная база, где можно открыть счёт, снизить расходы и раскачать первые деньги.'];
+    if(priority==='europe')return ['Маршрут: база → Европа','Сначала собираешь документы, деньги и банковскую историю в более простой стране, потом заходишь в европейский сценарий: учёба, фриланс-виза, работа или другая длинная виза.'];
+    if(priority==='tax')return ['Маршрут: доход уже есть, оптимизируем статус','Тут главный вопрос не «куда пустят», а где твой доход, налоги, банки и легализация складываются без лишнего риска.'];
+    if(budget==='low')return ['Маршрут: база сначала, цель потом','Сейчас задача не выбрать страну навсегда, а дешево и легально встать на ноги: статус, банк, первый доход, спокойная голова.'];
+    return ['Маршрут: выбрать базу и не сжечь запас','У тебя уже есть пространство для манёвра, но без плана деньги легко уйдут на дорогую страну, ненужные консультации и документы не под тот сценарий.'];
+  }
+  function firstSteps(timeline,income,skill){
+    var steps=['Проверить паспорт, сроки, документы об образовании/браке/детях и то, что можно апостилировать заранее.','Посчитать первый месяц: билет, жильё с депозитом, страховка, легализация, связь, еда и запас.','Выбрать одну страну-базу и одну запасную, а не десять красивых вариантов одновременно.'];
+    if(timeline==='now')steps.unshift('Не покупать билет сегодня: сначала проверить въезд, регистрацию, основание для статуса и банковский сценарий.');
+    if(income==='none')steps.push('Параллельно выбрать быстрый способ дохода: сервис, сезонка, удалёнка, преподавание, услуги или своё ИП.');
+    if(skill==='unsure'||skill==='no')steps.push('Разобрать, какой навык можно монетизировать быстро, даже если это пока не «профессия мечты».');
+    return steps;
+  }
+  function risks(group,priority){
+    var r=['Не платить помогатору за «подбор страны», пока не понятны бюджет, основание и срок.','Не путать безвиз с легализацией: въехать можно легко, жить и работать — не всегда.','Не собирать документы под страну, которую ты выбрал из тревоги, а не из расчёта.'];
+    if(group==='pet')r.push('С животным заранее проверить чип, прививки, титры, правила авиакомпаний и въезда.');
+    if(group==='family')r.push('С ребёнком или партнёром считать жильё, медицину и документы не как «плюс один», а как отдельный сценарий.');
+    if(priority==='europe')r.push('Европейский маршрут редко делается первым ходом без денег и документов: часто выгоднее готовить его из базы.');
+    return r;
+  }
+  btn.addEventListener('click',function(){
+    var budget=val('rb-budget'), timeline=val('rb-timeline'), income=val('rb-income'), group=val('rb-group'), priority=val('rb-priority'), skill=val('rb-skill');
+    var type=typeText(budget,income,priority);
+    var countries=pickBase(budget,priority);
+    out.hidden=false;
+    out.innerHTML=
+      '<div class=\"result-kicker\">Черновик, не юридическая консультация</div>'+
+      '<h3>'+type[0]+'</h3>'+
+      '<p>'+type[1]+'</p>'+
+      '<div class=\"result-grid\">'+
+        '<div class=\"result-card\"><h4>Сколько готовить</h4><p><b>'+budgetText(budget,group)+'</b></p><p>Это не «идеальная сумма», а рабочий диапазон для первого хода: билет, жильё, документы, страховка и подушка.</p></div>'+
+        '<div class=\"result-card\"><h4>Куда смотреть первыми</h4>'+items(countries)+'</div>'+
+        '<div class=\"result-card result-wide\"><h4>Первые шаги</h4>'+items(firstSteps(timeline,income,skill))+'</div>'+
+        '<div class=\"result-card result-wide\"><h4>Где можно слить деньги</h4>'+items(risks(group,priority))+'</div>'+
+        '<div class=\"result-card result-wide\"><h4>Что даст ВЫЕЗД</h4><p>Внутри можно принести этот черновик и докрутить его: выбрать базу, проверить логику, понять документы, не купить лишнюю консультацию и не остаться один на один с меняющимися правилами.</p><div class=\"btns\" style=\"margin-top:14px\"><a class=\"btn btn-fill\" href=\"#kupit\">Разобрать маршрут в ВЫЕЗД</a><a class=\"btn btn-line\" href=\"#article\">Почитать статью глубже</a></div></div>'+
+      '</div>';
+    out.scrollIntoView({behavior:'smooth',block:'start'});
   });
 })();
 (function(){

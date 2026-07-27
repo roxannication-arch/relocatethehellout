@@ -54,6 +54,7 @@
   .hero-point .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 10px;margin-bottom:12px}
   .hero-point strong{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:clamp(28px,4vw,46px);line-height:.96;color:var(--accent);margin-bottom:10px}
   .hero-point p{font-size:16.5px;line-height:1.55;margin:0}
+  .hero-actions{margin-top:16px}
   .hero-art svg{width:100%;max-width:300px;display:block;margin-left:auto}
   .hero-meta{border-top:2px solid var(--rule);padding:12px 0 14px;display:flex;gap:22px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .hero-meta b{color:var(--ink)}
@@ -77,6 +78,12 @@
   .nav-menu[open] .nav-burger span:nth-child(2){opacity:0}
   .nav-menu[open] .nav-burger span:nth-child(1){transform:translateY(9.5px) rotate(45deg)}
   .nav-menu[open] .nav-burger span:nth-child(3){transform:translateY(-9.5px) rotate(-45deg)}
+
+  /* QUICK OFFER */
+  .quick-offer{background:var(--paper-2);border-bottom:2px solid var(--rule)}
+  .quick-offer .inner{max-width:var(--col);margin:0 auto;padding:34px 28px 38px}
+  .quick-offer h2{margin:0 0 16px;font-size:clamp(28px,4vw,46px)}
+  .quick-offer p{font-size:18px;line-height:1.65;margin:0 0 18px}
 
   /* ARTICLE LAYOUT */
   .article{padding:40px 0 0}
@@ -144,6 +151,7 @@
   .btn-line:hover{background:var(--ink);color:var(--paper)}
   .cta-art{display:flex;justify-content:flex-end;margin-top:-10px}
   .cta-art svg{width:130px}
+  .mobile-cta{display:none}
 
   footer{border-top:2px solid var(--rule)}
   footer .wrap{padding:22px 28px 30px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -198,6 +206,10 @@
     .tracks{grid-template-columns:1fr}
     .mod{grid-template-columns:56px 1fr}
     .mod .mno{font-size:30px}
+    body{padding-bottom:74px}
+    .mobile-cta{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--paper);border-top:2px solid var(--rule);padding:10px}
+    .mobile-cta a{font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;text-align:center;text-decoration:none;border:2px solid var(--rule);padding:12px 8px;font-size:14px;line-height:1}
+    .mobile-cta a:first-child{background:var(--accent);border-color:var(--accent);color:#fff}
   }
 
   /* CTA incl list */
@@ -258,6 +270,10 @@
           <span class="tag">Главный поинт</span>
           <strong>Сэкономь на помогаторах</strong>
           <p>Сначала пойми свой маршрут: куда можно въехать, на каком основании остаться и какие документы реально нужны. Тогда платишь только там, где без специалиста правда нельзя.</p>
+          <div class="btns hero-actions">
+            <a class="btn btn-fill" href="#route">Собрать маршрут</a>
+            <a class="btn btn-line" href="#article">Читать статью</a>
+          </div>
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
@@ -304,7 +320,27 @@
   </div>
 </nav>
 
-<article class="article">
+<section class="quick-offer" id="route">
+  <div class="inner">
+    <h2>Если тебе нужен не текст, а маршрут</h2>
+    <p>Статья ниже бесплатно даст карту: страны, суммы, основания и ошибки. Но если нужно применить это к своей ситуации — бюджет, профессия, сроки, документы, животные, семья, страхи — для этого есть ВЫЕЗД.</p>
+    <div class="note">
+      <span class="tag">Зачем вступать</span>
+      За $100 ты покупаешь не «волшебную релокацию», а понятный первый маршрут: куда смотреть, что готовить сейчас, где справиться самому и где правда нужен специалист. Это дешевле одной лишней консультации у помогатора.
+    </div>
+    <div class="tracks tracks-3">
+      <div class="track"><span class="tag">1</span><h3>Точка А</h3><p>Разложить паспорт, бюджет, профессию, сроки и ограничения без паники.</p></div>
+      <div class="track"><span class="tag">2</span><h3>2–3 страны</h3><p>Выбрать не «красиво», а реалистично: въезд, легализация, деньги, первый доход.</p></div>
+      <div class="track"><span class="tag">3</span><h3>Первый шаг</h3><p>Понять, какой документ или действие делать сейчас, а что не покупать вслепую.</p></div>
+    </div>
+    <div class="btns" style="margin-top:22px">
+      <a class="btn btn-fill" href="#kupit">Вступить в ВЫЕЗД</a>
+      <a class="btn btn-line" href="#article">Сначала читать статью</a>
+    </div>
+  </div>
+</section>
+
+<article class="article" id="article">
   <div class="wrap"><div class="col">
 
     <p class="lede drop">Знаешь, как выглядит вечер человека, который «когда-нибудь уедет»?</p>
@@ -716,6 +752,11 @@
     </span>
   </div>
 </footer>
+
+<div class="mobile-cta" aria-label="Быстрые действия">
+  <a href="#kupit">Вступить</a>
+  <a href="#article">Статья</a>
+</div>
 
 <script>
 (function(){

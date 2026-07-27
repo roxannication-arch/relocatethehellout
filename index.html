@@ -60,12 +60,23 @@
 
   /* ARTICLE NAV */
   .article-nav{position:sticky;top:49px;z-index:19;background:var(--paper);border-bottom:2px solid var(--rule)}
-  .article-nav .wrap{padding-top:12px;padding-bottom:12px}
-  .nav-label{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--accent-deep);font-weight:600;margin-bottom:10px}
-  .nav-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .nav-scroll::-webkit-scrollbar{display:none}
-  .nav-scroll a{flex:0 0 auto;border:2px solid var(--rule);background:var(--paper-2);padding:8px 11px;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:13px;font-weight:600;letter-spacing:.03em;text-decoration:none;white-space:nowrap}
-  .nav-scroll a:hover{background:var(--ink);color:var(--paper)}
+  .article-nav .wrap{padding-top:10px;padding-bottom:10px}
+  .nav-menu{max-width:var(--col);margin:0 auto}
+  .nav-menu summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;border:2px solid var(--rule);background:var(--paper-2);padding:11px 13px}
+  .nav-menu summary::-webkit-details-marker{display:none}
+  .nav-burger{width:28px;height:22px;display:flex;flex-direction:column;justify-content:space-between;flex:0 0 28px}
+  .nav-burger span{display:block;height:3px;background:var(--accent)}
+  .nav-title{font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:700;font-size:18px;line-height:1}
+  .nav-sub{display:block;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--muted);margin-top:3px}
+  .nav-panel{border:2px solid var(--rule);border-top:0;background:var(--paper);padding:8px}
+  .nav-panel a{display:block;text-decoration:none;padding:12px;border-bottom:1px solid var(--rule-soft)}
+  .nav-panel a:last-child{border-bottom:0}
+  .nav-panel strong{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:16px;line-height:1.1}
+  .nav-panel small{display:block;font-size:13.5px;line-height:1.35;color:var(--muted);margin-top:4px}
+  .nav-panel a:hover{background:var(--paper-2)}
+  .nav-menu[open] .nav-burger span:nth-child(2){opacity:0}
+  .nav-menu[open] .nav-burger span:nth-child(1){transform:translateY(9.5px) rotate(45deg)}
+  .nav-menu[open] .nav-burger span:nth-child(3){transform:translateY(-9.5px) rotate(-45deg)}
 
   /* ARTICLE LAYOUT */
   .article{padding:40px 0 0}
@@ -273,18 +284,23 @@
 
 <nav class="article-nav" aria-label="Навигация по статье">
   <div class="wrap">
-    <div class="nav-label">Маршрут статьи</div>
-    <div class="nav-scroll">
-      <a href="#bez-it">Без айти</a>
-      <a href="#countries">Куда ехать</a>
-      <a href="#legal">Основания</a>
-      <a href="#main-idea">Главная мысль</a>
-      <a href="#money">Деньги</a>
-      <a href="#work">Работа</a>
-      <a href="#mistakes">Ошибки</a>
-      <a href="#inside">Что внутри</a>
-      <a href="#kupit">Купить</a>
-    </div>
+    <details class="nav-menu">
+      <summary>
+        <span class="nav-burger" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span><span class="nav-title">Оглавление</span><span class="nav-sub">выбери, что сейчас важно</span></span>
+      </summary>
+      <div class="nav-panel">
+        <a href="#bez-it"><strong>Можно ли уехать не айтишнику?</strong><small>Короткий ответ и главная схема переезда.</small></a>
+        <a href="#countries"><strong>Куда ехать с твоим бюджетом?</strong><small>Страны по трём ситуациям: мало, средне, есть запас.</small></a>
+        <a href="#legal"><strong>На каком основании остаться?</strong><small>ИП, учёба, фриланс-визы, репатриация и другие легальные пути.</small></a>
+        <a href="#main-idea"><strong>Почему первая страна — это база?</strong><small>Как не искать идеал и не платить помогаторам за хаос.</small></a>
+        <a href="#money"><strong>Сколько денег реально нужно?</strong><small>Не страшилки на $30k, а рабочие суммы для старта.</small></a>
+        <a href="#work"><strong>На что жить после выезда?</strong><small>Первые варианты дохода без оффера от Google.</small></a>
+        <a href="#mistakes"><strong>Где чаще всего сливают деньги?</strong><small>Пять ошибок, которые стоят дороже нормального плана.</small></a>
+        <a href="#inside"><strong>Что внутри ВЫЕЗД?</strong><small>Чат, база знаний, обновления и разборы маршрута.</small></a>
+        <a href="#kupit"><strong>Вступить в первый поток</strong><small>Цена, бонус и способы оплаты.</small></a>
+      </div>
+    </details>
   </div>
 </nav>
 
@@ -694,6 +710,13 @@
 </footer>
 
 <script>
+(function(){
+  var menu=document.querySelector('.nav-menu');
+  if(!menu)return;
+  menu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click',function(){menu.removeAttribute('open')});
+  });
+})();
 (function(){
   var el=document.getElementById('countdown');if(!el)return;
   var end=new Date('2026-07-28T21:00:00Z').getTime();

@@ -50,6 +50,10 @@
   h1 .red{color:var(--accent)}
   .hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:36px;align-items:end;margin-top:26px;padding-bottom:40px}
   .hero-sub{font-size:clamp(17px,1.6vw,20px);line-height:1.55;max-width:640px}
+  .hero-point{margin-top:22px;border:3px solid var(--accent);background:var(--paper-2);padding:18px 20px;max-width:680px}
+  .hero-point .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 10px;margin-bottom:12px}
+  .hero-point strong{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:clamp(28px,4vw,46px);line-height:.96;color:var(--accent);margin-bottom:10px}
+  .hero-point p{font-size:16.5px;line-height:1.55;margin:0}
   .hero-art svg{width:100%;max-width:300px;display:block;margin-left:auto}
   .hero-meta{border-top:2px solid var(--rule);padding:12px 0 14px;display:flex;gap:22px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .hero-meta b{color:var(--ink)}
@@ -228,7 +232,14 @@
     <div class="kicker">Статья · Июль 2026 · Читать 12 минут</div>
     <h1>Как уехать из России в 2026, <span class="red">если ты не айтишник</span></h1>
     <div class="hero-grid">
-      <p class="hero-sub">Куда реально можно с паспортом РФ, сколько нужно денег и с чего начать. Без мотивационной воды: страны, суммы, сроки и грабли, о которые уже споткнулись до тебя.</p>
+      <div class="hero-copy">
+        <p class="hero-sub">Куда реально можно с паспортом РФ, сколько нужно денег и с чего начать. Без мотивационной воды: страны, суммы, сроки и грабли, о которые уже споткнулись до тебя.</p>
+        <div class="hero-point">
+          <span class="tag">Главный поинт</span>
+          <strong>Сэкономь на помогаторах</strong>
+          <p>Сначала пойми свой маршрут: куда можно въехать, на каком основании остаться и какие документы реально нужны. Тогда платишь только там, где без специалиста правда нельзя.</p>
+        </div>
+      </div>
       <div class="hero-art" aria-hidden="true">
         <svg viewBox="0 0 300 190" xmlns="http://www.w3.org/2000/svg" fill="none">
           <circle cx="34" cy="150" r="7" fill="#151210"/>
@@ -261,11 +272,6 @@
     <p>Мне такое пишут в личку каждый день, и каждый раз хочется ответить: слушай, ты просто гуглишь не то.</p>
 
     <p>Вариантов полно, просто никто не раскладывает их для нормальных людей без оффера от Google. Ладно, раскладываю я.</p>
-
-    <div class="note">
-      <span class="tag">Главный поинт</span>
-      <b>Сэкономь на помогаторах.</b> Сначала пойми свой маршрут: куда можно въехать, на каком основании остаться и какие документы реально нужны. Тогда ты платишь только там, где без специалиста правда нельзя, а не за пересказ гугла с тревожным лицом.
-    </div>
 
     <h2>А без айти вообще реально?</h2>
 

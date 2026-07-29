@@ -23,6 +23,7 @@ const WEBINAR = {
   dateText:      "суббота, 8 августа",
   timeText:      "12:00 по Москве",
   regLink:       "https://t.me/+AuJciJsuPiw1NzMx",
+  formAction:    "https://docs.google.com/forms/d/e/1FAIpQLSc-KUpyNyOrTNJ8NyElN-aFAcr43X5GD1bH8lPEsmZ_HTzNRA/formResponse",
   showCountdown: true
 };
 </script>
@@ -179,15 +180,16 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
   <div class="reg-dialog" role="dialog" aria-modal="true" aria-labelledby="regTitle">
     <h2 id="regTitle">Забронировать место</h2>
     <p>Оставь имя, город и email. После отправки откроется Telegram, где будет доступ к эфиру.</p>
-    <form class="reg-form" id="regForm">
-      <label>Имя<input name="name" type="text" autocomplete="name" required></label>
-      <label>Город<input name="city" type="text" autocomplete="address-level2" required></label>
-      <label>Email<input name="email" type="email" autocomplete="email" required></label>
+    <form class="reg-form" id="regForm" method="POST" target="googleFormTarget">
+      <label>Имя<input name="entry.1662366978" type="text" autocomplete="name" required></label>
+      <label>Город<input name="entry.633890597" type="text" autocomplete="address-level2" required></label>
+      <label>Email<input name="entry.1331633820" type="email" autocomplete="email" required></label>
       <div class="reg-actions">
         <button class="pill" type="submit">Перейти в Telegram</button>
         <button class="pill secondary" type="button" data-reg-close>Закрыть</button>
       </div>
     </form>
+    <iframe name="googleFormTarget" style="display:none"></iframe>
   </div>
 </div>
 
@@ -205,10 +207,11 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
   document.querySelectorAll('[data-reg]').forEach(function(a){ a.setAttribute('href','#registration'); a.addEventListener('click',openReg); });
   document.querySelectorAll('[data-reg-close]').forEach(function(btn){ btn.addEventListener('click',closeReg); });
   if(modal){ modal.addEventListener('click',function(e){ if(e.target===modal) closeReg(); }); }
-  if(form){ form.addEventListener('submit',function(e){
-    e.preventDefault();
+  if(form){
+    if(W.formAction){ form.setAttribute('action', W.formAction); }
+    form.addEventListener('submit',function(){
     try{ window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}; window.va('event',{name:'webinar_registration_form_submitted'}); }catch(err){}
-    if(W.regLink){ window.location.href=W.regLink; }
+    if(W.regLink){ setTimeout(function(){ window.location.href=W.regLink; }, 700); }
   }); }
 
   function plural(n,one,few,many){ var a=n%10,b=n%100;

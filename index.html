@@ -92,6 +92,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
 .reg-form input{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px 14px;font:inherit;background:#fff;color:var(--ink)}
 .reg-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 .reg-actions .pill{box-shadow:none}
+.reg-fallback{display:block;margin-top:12px;font-size:13px;color:var(--muted)}
 
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -185,9 +186,10 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
       <label>Город<input name="entry.633890597" type="text" autocomplete="address-level2" required></label>
       <label>Email<input name="entry.1331633820" type="email" autocomplete="email" required></label>
       <div class="reg-actions">
-        <button class="pill" type="submit">Перейти в Telegram</button>
+        <button class="pill" type="button" data-reg-submit>Перейти в Telegram</button>
         <button class="pill secondary" type="button" data-reg-close>Закрыть</button>
       </div>
+      <a class="reg-fallback" href="https://t.me/+AuJciJsuPiw1NzMx" rel="noopener">Если не открылось автоматически — открыть Telegram</a>
     </form>
     <iframe name="googleFormTarget" style="display:none"></iframe>
   </div>
@@ -209,7 +211,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
   if(modal){ modal.addEventListener('click',function(e){ if(e.target===modal) closeReg(); }); }
   if(form){
     if(W.formAction){ form.setAttribute('action', W.formAction); }
-    form.addEventListener('submit',function(e){
+    function submitRegistration(e){
     e.preventDefault();
     if(form.reportValidity && !form.reportValidity()) return;
     var payload = new FormData(form);
@@ -221,7 +223,10 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
       }
     }catch(err){}
     if(W.regLink){ window.location.href=W.regLink; }
-  }); }
+    }
+    form.addEventListener('submit',submitRegistration);
+    document.querySelectorAll('[data-reg-submit]').forEach(function(btn){ btn.addEventListener('click',submitRegistration); });
+  }
 
   function plural(n,one,few,many){ var a=n%10,b=n%100;
     if(a===1&&b!==11) return one;

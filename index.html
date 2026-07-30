@@ -209,9 +209,18 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
   if(modal){ modal.addEventListener('click',function(e){ if(e.target===modal) closeReg(); }); }
   if(form){
     if(W.formAction){ form.setAttribute('action', W.formAction); }
-    form.addEventListener('submit',function(){
+    form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(form.reportValidity && !form.reportValidity()) return;
+    var payload = new FormData(form);
     try{ window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}; window.va('event',{name:'webinar_registration_form_submitted'}); }catch(err){}
-    if(W.regLink){ setTimeout(function(){ window.location.href=W.regLink; }, 700); }
+    try{
+      if(W.formAction){
+        if(navigator.sendBeacon && navigator.sendBeacon(W.formAction, payload)){ /* sent */ }
+        else { fetch(W.formAction,{method:'POST',mode:'no-cors',body:payload,keepalive:true}); }
+      }
+    }catch(err){}
+    if(W.regLink){ window.location.href=W.regLink; }
   }); }
 
   function plural(n,one,few,many){ var a=n%10,b=n%100;

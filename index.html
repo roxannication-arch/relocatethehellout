@@ -185,7 +185,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
       <label>Город<input name="entry.633890597" type="text" autocomplete="address-level2" required></label>
       <label>Email<input name="entry.1331633820" type="email" autocomplete="email" required></label>
       <div class="reg-actions">
-        <button class="pill" type="button" data-reg-submit>Перейти в Telegram</button>
+        <a class="pill" href="https://t.me/+AuJciJsuPiw1NzMx" rel="noopener" data-reg-submit>Перейти в Telegram</a>
         <button class="pill secondary" type="button" data-reg-close>Закрыть</button>
       </div>
     </form>
@@ -210,8 +210,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
   if(form){
     if(W.formAction){ form.setAttribute('action', W.formAction); }
     function submitRegistration(e){
-    e.preventDefault();
-    if(form.reportValidity && !form.reportValidity()) return;
+    if(form.reportValidity && !form.reportValidity()){ e.preventDefault(); return; }
     var payload = new FormData(form);
     try{ window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}; window.va('event',{name:'webinar_registration_form_submitted'}); }catch(err){}
     try{
@@ -220,9 +219,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
         else { fetch(W.formAction,{method:'POST',mode:'no-cors',body:payload,keepalive:true}); }
       }
     }catch(err){}
-    if(W.regLink){ window.location.href=W.regLink; }
     }
-    form.addEventListener('submit',submitRegistration);
     document.querySelectorAll('[data-reg-submit]').forEach(function(btn){ btn.addEventListener('click',submitRegistration); });
   }
 

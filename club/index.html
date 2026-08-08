@@ -146,17 +146,19 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
   function tick(){
     var diff = deadline - Date.now();
     if(diff <= 0){ setRaised(); return; }
-    var mins = Math.floor(diff/60000);
-    var days = Math.floor(mins/1440);
-    var hours = Math.floor((mins%1440)/60);
-    var m = mins%60;
+    var total = Math.floor(diff/1000);
+    var days = Math.floor(total/86400); total -= days*86400;
+    var hours = Math.floor(total/3600); total -= hours*3600;
+    var mins = Math.floor(total/60);
+    var secs = total%60;
     var parts = [];
     if(days) parts.push(days + ' ' + plural(days,'день','дня','дней'));
-    if(hours) parts.push(hours + ' ' + plural(hours,'час','часа','часов'));
-    if(!days) parts.push(m + ' ' + plural(m,'минута','минуты','минут'));
+    parts.push(hours + ' ' + plural(hours,'час','часа','часов'));
+    parts.push(mins + ' ' + plural(mins,'минута','минуты','минут'));
+    parts.push(secs + ' ' + plural(secs,'секунда','секунды','секунд'));
     counts.forEach(function(count){ count.textContent = 'До повышения ' + parts.join(' '); });
   }
-  tick(); setInterval(tick,30000);
+  tick(); setInterval(tick,1000);
 })();
 </script>
 

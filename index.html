@@ -81,16 +81,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
 .final{padding:46px 0 56px}
 .final .pill{margin-top:6px}
 .mobile-cta.single{grid-template-columns:1fr}
-.reg-modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(28,23,21,.52);padding:18px}
-.reg-modal.open{display:flex}
-.reg-dialog{width:100%;max-width:430px;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:22px;box-shadow:var(--shadow)}
-.reg-dialog h2{font-size:clamp(26px,7vw,38px);margin-bottom:10px}
-.reg-dialog p{font-size:15.5px;line-height:1.5;color:var(--muted);margin-bottom:16px}
-.reg-form{display:grid;gap:10px}
-.reg-form label{display:grid;gap:6px;font-size:13px;font-weight:700;color:var(--ink)}
-.reg-form input{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px 14px;font:inherit;background:#fff;color:var(--ink)}
-.reg-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-.reg-actions .pill{box-shadow:none}
+
 
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -109,7 +100,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
 <div>Время<b data-w="time">12:00 по Москве</b></div>
 <div>Вход<b>бесплатно</b></div>
 </div>
-<div class="hero-actions"><a class="pill" href="#" data-reg>Занять место на эфире</a></div>
+<div class="hero-actions"><a class="pill" href="https://t.me/+1rfHjHuuU8hmOGQx" rel="noopener">Занять место на эфире</a></div>
 <div class="countline" data-w="countdown"></div>
 </div></div></section>
 
@@ -142,29 +133,13 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
 <section class="final"><div class="wrap">
 <h2><span data-w="dateShort">Суббота, 22 августа</span>, <span data-w="time">12:00 по Москве</span></h2>
 <p class="lead">90 минут про доход, страны и первые шаги. Бесплатно.</p>
-<a class="pill" href="#" data-reg>Занять место на эфире</a>
+<a class="pill" href="https://t.me/+1rfHjHuuU8hmOGQx" rel="noopener">Занять место на эфире</a>
 </div></section>
 
 </main>
 <footer class="footer"><div class="wrap">ВЫЕЗД · 2026 · бесплатный эфир · это не юридическая консультация</div></footer>
-<div class="mobile-cta single"><a href="#" data-reg>Занять место на эфире</a></div>
+<div class="mobile-cta single"><a href="https://t.me/+1rfHjHuuU8hmOGQx" rel="noopener">Занять место на эфире</a></div>
 
-<div class="reg-modal" id="regModal" aria-hidden="true">
-  <div class="reg-dialog" role="dialog" aria-modal="true" aria-labelledby="regTitle">
-    <h2 id="regTitle">Забронировать место</h2>
-    <p>Оставь имя, город и email. После отправки откроется Telegram, где будет доступ к эфиру.</p>
-    <form class="reg-form" id="regForm" method="POST" target="googleFormTarget">
-      <label>Имя<input name="entry.1662366978" type="text" autocomplete="name" required></label>
-      <label>Город<input name="entry.633890597" type="text" autocomplete="address-level2" required></label>
-      <label>Email<input name="entry.1331633820" type="email" autocomplete="email" required></label>
-      <div class="reg-actions">
-        <a class="pill" href="https://t.me/+1rfHjHuuU8hmOGQx" rel="noopener" data-reg-submit>Перейти в Telegram</a>
-        <button class="pill secondary" type="button" data-reg-close>Закрыть</button>
-      </div>
-    </form>
-    <iframe name="googleFormTarget" style="display:none"></iframe>
-  </div>
-</div>
 
 <script>
 (function(){
@@ -173,29 +148,6 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
     document.querySelectorAll('[data-w="'+k+'"]').forEach(function(el){el.textContent=v;}); }
   setAll('date',W.dateText); setAll('time',W.timeText);
   if(W.dateText){ setAll('dateShort', W.dateText.charAt(0).toUpperCase()+W.dateText.slice(1)); }
-  var modal=document.getElementById('regModal');
-  var form=document.getElementById('regForm');
-  function openReg(e){ if(e) e.preventDefault(); if(modal){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); var first=modal.querySelector('input'); if(first) first.focus(); } }
-  function closeReg(){ if(modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); } }
-  document.querySelectorAll('[data-reg]').forEach(function(a){ a.setAttribute('href','#registration'); a.addEventListener('click',openReg); });
-  document.querySelectorAll('[data-reg-close]').forEach(function(btn){ btn.addEventListener('click',closeReg); });
-  if(modal){ modal.addEventListener('click',function(e){ if(e.target===modal) closeReg(); }); }
-  if(form){
-    if(W.formAction){ form.setAttribute('action', W.formAction); }
-    function submitRegistration(e){
-    if(form.checkValidity && !form.checkValidity()){ return; }
-    var payload = new FormData(form);
-    try{ window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)}; window.va('event',{name:'webinar_registration_form_submitted'}); }catch(err){}
-    try{
-      if(W.formAction){
-        if(navigator.sendBeacon && navigator.sendBeacon(W.formAction, payload)){ /* sent */ }
-        else { fetch(W.formAction,{method:'POST',mode:'no-cors',body:payload,keepalive:true}); }
-      }
-    }catch(err){}
-    }
-    document.querySelectorAll('[data-reg-submit]').forEach(function(btn){ btn.addEventListener('click',submitRegistration); });
-  }
-
   function plural(n,one,few,many){ var a=n%10,b=n%100;
     if(a===1&&b!==11) return one;
     if(a>=2&&a<=4&&(b<10||b>=20)) return few;

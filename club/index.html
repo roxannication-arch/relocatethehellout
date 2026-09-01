@@ -187,8 +187,8 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
         <label class="wl-label">Telegram
           <input class="wl-input" name="tg" type="text" required placeholder="@ник">
         </label>
-        <label class="wl-label">Email (необязательно)
-          <input class="wl-input" name="email" type="email" autocomplete="email">
+        <label class="wl-label">Email
+          <input class="wl-input" name="email" type="email" required autocomplete="email">
         </label>
         <button type="submit" class="wl-submit" id="wlSubmit">Встать в список</button>
         <p class="wl-error" id="wlError" hidden>Не отправилось. Проверь интернет и попробуй ещё раз.</p>
@@ -240,7 +240,7 @@ h1{font-size:clamp(42px,11vw,84px);position:relative;z-index:1}.red{color:var(--
     var data=new FormData();
     data.append(ENTRIES.name,f.name.value.trim());
     data.append(ENTRIES.tg,f.tg.value.trim());
-    data.append(ENTRIES.email,f.email.value.trim()||'-');
+    data.append(ENTRIES.email,f.email.value.trim());
     fetch('https://docs.google.com/forms/d/e/'+FORM_ID+'/formResponse',{method:'POST',mode:'no-cors',body:data})
       .then(function(){
         document.getElementById('wlFormWrap').hidden=true;

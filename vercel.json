@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/:slug((?!club|index|api|assets|static)[a-z0-9][a-z0-9-]*)",
+      "destination": "https://vyezd-pages.vercel.app/:slug"
+    },
+    {
+      "source": "/:slug((?!club|index|api|assets|static)[a-z0-9][a-z0-9-]*)/",
+      "destination": "https://vyezd-pages.vercel.app/:slug"
+    }
+  ]
+}
